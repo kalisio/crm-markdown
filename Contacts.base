@@ -93,15 +93,18 @@ views:
             - status == "inbox"
             - status == "review"
     order:
+      - company
       - file.name
       - relationship_type
       - profile_complete
       - first_met
+      - last_contacted
       - lead_source
     sort:
+      - property: company
+        direction: ASC
       - property: file.name
         direction: ASC
-
   - type: table
     name: Relationship Health
     filters:
@@ -139,7 +142,6 @@ views:
     sort:
       - property: next_contact_due
         direction: ASC
-
   - type: table
     name: Archived
     filters:
