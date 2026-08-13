@@ -1,8 +1,10 @@
 # Obsidian config
 .obsidian
 # Default rules to keep data local
-contacts/*.md
+contacts/**/*.md
 !contacts/README.md
+companies/*.md
+!companies/README.md
 reviews/*.md
 !reviews/README.md
 archive/*.md

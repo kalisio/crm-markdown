@@ -27,7 +27,7 @@ def parse_frontmatter(path):
     return values
 
 errors = []
-paths = [path for path in sorted(CONTACTS.glob("*.md")) if path.name != "README.md"]
+paths = [path for path in sorted(CONTACTS.glob("**/*.md")) if path.name != "README.md"]
 sample_paths = sorted(SAMPLES.glob("*.md"))
 all_paths = paths + sample_paths
 names = {}
