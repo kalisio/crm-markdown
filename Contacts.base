@@ -2,7 +2,6 @@ filters:
   and:
     - type == "contact"
     - file.inFolder("contacts")
-
 properties:
   file.name:
     displayName: Contact
@@ -22,7 +21,6 @@ properties:
     displayName: Last Contacted
   next_contact_due:
     displayName: Next Due
-
 views:
   - type: table
     name: All Active Contacts
@@ -46,7 +44,6 @@ views:
         direction: ASC
       - property: file.name
         direction: ASC
-
   - type: table
     name: Core and Active
     filters:
@@ -68,7 +65,6 @@ views:
     sort:
       - property: next_contact_due
         direction: ASC
-
   - type: table
     name: By Company
     filters:
@@ -88,13 +84,14 @@ views:
         direction: ASC
       - property: file.name
         direction: ASC
-
   - type: table
     name: Inbox / Needs Review
     filters:
       and:
         - file.inFolder("contacts")
-        - status == "inbox"
+        - or:
+            - status == "inbox"
+            - status == "review"
     order:
       - file.name
       - relationship_type
@@ -126,7 +123,6 @@ views:
     sort:
       - property: file.name
         direction: ASC
-
   - type: table
     name: Scheduled Next Steps
     filters:
