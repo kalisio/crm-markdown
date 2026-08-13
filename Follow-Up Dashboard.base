@@ -4,11 +4,9 @@ filters:
     - file.inFolder("contacts")
     - status == "active"
     - do_not_contact != true
-
 formulas:
   due_status: |
-    if(next_contact_due < date(today), "Overdue", if(next_contact_due == date(today), "Today", if(next_contact_due <= date(today) + dur(7 days), "This Week", "Later")))
-
+    if(next_contact_due < date(now()).date(), "Overdue", if(next_contact_due == date(now()).date(), "Today", if(next_contact_due <= date(now()).date() + "1 week", "This Week", "Later")))
 properties:
   file.name:
     displayName: Contact
@@ -26,13 +24,12 @@ properties:
     displayName: Next Due
   due_status:
     displayName: Due Status
-
 views:
   - type: table
     name: Contact Today
     filters:
       and:
-        - next_contact_due == date(today)
+        - formula.due_status == "Today"
     order:
       - file.name
       - relationship_type
@@ -41,17 +38,17 @@ views:
       - contact_reason
       - last_contacted
       - next_contact_due
+      - formula.due_status
     sort:
       - property: relationship_tier
         direction: ASC
       - property: file.name
         direction: ASC
-
   - type: table
     name: Overdue
     filters:
       and:
-        - next_contact_due < date(today)
+        - formula.due_status == "Overdue"
     order:
       - file.name
       - relationship_type
@@ -60,16 +57,15 @@ views:
       - contact_reason
       - last_contacted
       - next_contact_due
+      - formula.due_status
     sort:
       - property: next_contact_due
         direction: ASC
-
   - type: table
     name: This Week
     filters:
       and:
-        - next_contact_due > date(today)
-        - next_contact_due <= date(today) + dur(7 days)
+        - formula.due_status == "This Week"
     order:
       - file.name
       - relationship_type
